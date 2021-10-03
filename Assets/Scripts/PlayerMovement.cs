@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 
 public class PlayerMovement : MonoBehaviour
 {
     // Move player in 2D space
     [Header("Misc")]
-    public float maxSpeed = 3.4f;
+    public float maxSpeed = 5f;
     public Camera mainCamera;
 
     [Header("Jump Properties")]
@@ -47,15 +47,13 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Movement controls
-        if (isGrounded)
-        {
-            if (Input.GetKey(KeyCode.A))
-                moveDirection = -1;
-            else if (Input.GetKey(KeyCode.D))
-                moveDirection = 1;
-            else
-                moveDirection = 0;
-        }
+        if (Input.GetKey(KeyCode.A))
+            moveDirection = -1;
+        else if (Input.GetKey(KeyCode.D))
+            moveDirection = 1;
+        else
+            moveDirection = 0;
+     
 
         // Change facing direction
         if (moveDirection != 0)
@@ -78,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             isJumping = true;
             jumpTimeCount = jumpTime;
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-        } 
+        }
         if (Input.GetKey(KeyCode.W) && isJumping == true)
         {
             if (jumpTimeCount > 0)
