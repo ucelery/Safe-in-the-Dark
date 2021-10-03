@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class CameraMotor : MonoBehaviour
 {
-    public Transform lookAt;
-    public float smoothing;
+    public Transform target;
     public Vector3 offset;
+    public float smoothing;
+    public Vector3 minVal, maxVal;
 
     private void FixedUpdate()
     {
-        if (lookAt != null)
+        if (target != null)
         {
-            Vector3 newPosition = Vector3.Lerp(transform.position, lookAt.transform.position + offset, smoothing);
+            Vector3 targetpos = target.position + offset;
+            Vector3 boundpos = new Vector3(
+                Mathf.Clamp(targetpos.x, minVal.x, maxVal.x),
+                Mathf.Clamp(targetpos.y, minVal.y, maxVal.y),
+                Mathf.Clamp(targetpos.z, minVal.z, maxVal.z)
+                );
+            Vector3 newPosition = Vector3.Lerp(transform.position, boundpos, smoothing * Time.fixedDeltaTime);
             transform.position = newPosition;
         }
     }

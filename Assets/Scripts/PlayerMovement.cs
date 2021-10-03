@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Experimental.Rendering.Universal;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
@@ -10,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     // Move player in 2D space
     [Header("Misc")]
     public float maxSpeed = 5f;
-    public Camera mainCamera;
 
     [Header("Jump Properties")]
     public float jumpHeight = 5f;
@@ -21,7 +22,11 @@ public class PlayerMovement : MonoBehaviour
     bool facingRight = true;
     float moveDirection = 0;
     bool isGrounded = false;
-    Vector3 cameraPos;
+
+    // Eye Closing Stuff
+    Transform smallLight;
+    Transform bigLight;
+    
     Rigidbody2D rb;
     Collider2D mainCollider;
     // Check every collider except Player and Ignore Raycast
@@ -38,9 +43,8 @@ public class PlayerMovement : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         facingRight = t.localScale.x > 0;
         gameObject.layer = 8;
-
-        if (mainCamera)
-            cameraPos = mainCamera.transform.position;
+        bigLight = transform.GetChild(0);
+        smallLight = transform.GetChild(1);
     }
 
     // Update is called once per frame
@@ -92,9 +96,18 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.W))
             isJumping = false;
 
-        // Camera follow
-        if (mainCamera)
-            mainCamera.transform.position = new Vector3(t.position.x, cameraPos.y, cameraPos.z);
+        // Close Eyes
+        if (Input.GetMouseButton(0))
+        {
+            bigLight.gameObject.SetActive(false);
+            smallLight.gameObject.SetActive(true);
+        } 
+        else
+        {
+            bigLight.gameObject.SetActive(true);
+            smallLight.gameObject.SetActive(false);
+        }
+        Debug.Log(smallLight.name);
     }
 
     void FixedUpdate()
@@ -109,5 +122,16 @@ public class PlayerMovement : MonoBehaviour
 
         // Simple debug
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, 0.23f, 0), isGrounded ? Color.green : Color.red);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("test");
+        if (other.gameObject.CompareTag("Damage"))
+        {
+            // gameover
+            Debug.Log("I ded, Restart");
+            SceneManager.LoadScene("Level 1");
+        }
     }
 }
