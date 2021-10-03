@@ -7,7 +7,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     // Move player in 2D space
     [Header("Misc")]
@@ -101,13 +101,12 @@ public class PlayerMovement : MonoBehaviour
         {
             bigLight.gameObject.SetActive(false);
             smallLight.gameObject.SetActive(true);
-        } 
+        }
         else
         {
             bigLight.gameObject.SetActive(true);
             smallLight.gameObject.SetActive(false);
         }
-        Debug.Log(smallLight.name);
     }
 
     void FixedUpdate()
@@ -126,12 +125,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("test");
         if (other.gameObject.CompareTag("Damage"))
         {
             // gameover
-            Debug.Log("I ded, Restart");
-            SceneManager.LoadScene("Level 1");
+            SceneManager.LoadScene("Level " + GameManager.Instance.level);
+        }
+
+        Debug.Log("Level " + GameManager.Instance.level.ToString());
+        if (other.gameObject.CompareTag("Goal"))
+        {
+            GameManager.Instance.level++;
+            SceneManager.LoadScene("Level " + GameManager.Instance.level.ToString());
         }
     }
 }

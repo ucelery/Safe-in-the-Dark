@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 1028899019281028272}
   - component: {fileID: 1028899019281028273}
   - component: {fileID: 1028899019281028274}
+  - component: {fileID: -6253092391115877647}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Damage
@@ -202,3 +203,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.11633301, y: 0.13735797}
   m_EdgeRadius: 0
+--- !u!114 &-6253092391115877647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028899019281028286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc13b0c43228c843948b51601ba054b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startColor: {r: 1, g: 1, b: 1, a: 0}
+  fadeColor: {r: 0, g: 0, b: 0, a: 0}
+  fadeSpeed: 1
