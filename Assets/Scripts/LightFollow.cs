@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class LightFollow : MonoBehaviour
 {
+    private bool follow = true;
     public GameObject player;
-    void Update()
+    void FixedUpdate()
     {
-        transform.position = player.transform.position;
+        if (follow)
+        {
+            transform.position = player.transform.position;
+        }
+    }
+
+    public void StopFollowing()
+    {
+        follow = false;
     }
 }

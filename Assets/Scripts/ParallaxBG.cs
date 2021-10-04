@@ -8,6 +8,8 @@ public class ParallaxBG : MonoBehaviour
     public GameObject cam;
     public float parallaxEffect;
 
+    private bool follow = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +19,19 @@ public class ParallaxBG : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float temp = (cam.transform.position.x * (1 - parallaxEffect));
-        float dist = (cam.transform.position.x * parallaxEffect);
-        transform.position = new Vector3(startpos + dist, transform.position.y, transform.position.z);
+        if (follow)
+        {
+            float temp = (cam.transform.position.x * (1 - parallaxEffect));
+            float dist = (cam.transform.position.x * parallaxEffect);
+            transform.position = new Vector3(startpos + dist, transform.position.y, transform.position.z);
 
-        if (temp > startpos + length) startpos += length;
-        else if (temp < startpos - length) startpos -= length;
+            if (temp > startpos + length) startpos += length;
+            else if (temp < startpos - length) startpos -= length;
+        }
+    }
+
+    public void StopFollowing()
+    {
+        follow = false;
     }
 }

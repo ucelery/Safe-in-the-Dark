@@ -131,9 +131,9 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene("Level " + GameManager.Instance.level);
         }
 
-        Debug.Log("Level " + GameManager.Instance.level.ToString());
         if (other.gameObject.CompareTag("Goal"))
         {
+            Debug.Log("twice?");
             GameManager.Instance.level++;
             SceneManager.LoadScene("Level " + GameManager.Instance.level.ToString());
         }
