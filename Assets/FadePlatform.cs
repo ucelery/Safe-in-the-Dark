@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-public class EnemyFade : MonoBehaviour
+public class FadePlatform : MonoBehaviour
 {
     public float fadeSpeed = 0.5f;
     private float alpha = 1;
     private void Start()
     {
-
+        Debug.Log(transform.Find("Tempo Platforms").GetComponent<Tilemap>().color);
     }
     void Update()
     {
@@ -23,18 +24,12 @@ public class EnemyFade : MonoBehaviour
             if (alpha < 1)
                 alpha += fadeSpeed * Time.fixedDeltaTime;
         }
-        GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, alpha);
+        
+        transform.Find("Tempo Platforms").GetComponent<Tilemap>().color = new Color(255f, 255f, 255f, alpha);
 
         if (alpha <= 0)
-        {
-            GetComponent<BoxCollider2D>().enabled = false;
-            GetComponent<Rigidbody2D>().isKinematic = true;
-        }
-        // freeze
+            transform.Find("Collision").GetComponent<TilemapCollider2D>().enabled = false;
         else
-        {
-            GetComponent<BoxCollider2D>().enabled = true;
-            GetComponent<Rigidbody2D>().isKinematic = false;
-        }
+            transform.Find("Collision").GetComponent<TilemapCollider2D>().enabled = true;
     }
 }

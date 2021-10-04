@@ -133,9 +133,23 @@ public class Player : MonoBehaviour
 
         if (other.gameObject.CompareTag("Goal"))
         {
-            Debug.Log("twice?");
-            GameManager.Instance.level++;
-            SceneManager.LoadScene("Level " + GameManager.Instance.level.ToString());
+            if (GameManager.Instance.level >= 3)
+            {
+                SceneManager.LoadScene("Main Menu");
+            } else
+            {
+                GameManager.Instance.level++;
+                SceneManager.LoadScene("Level " + GameManager.Instance.level.ToString());
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Damage"))
+        {
+            // gameover
+            SceneManager.LoadScene("Level " + GameManager.Instance.level);
         }
     }
 }
